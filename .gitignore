@@ -1,3 +1,8 @@
 .zig-cache/
 zig-out/
 *.o
+
+# dataset download script
+dataset/
+!dataset/*.py
+
