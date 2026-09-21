@@ -37,6 +37,10 @@ impl ValueRef {
         })))
     }
 
+    pub fn new_with_defaults(data: f64) -> Self {
+        ValueRef::new(data, Vec::new(), Vec::new())
+    }
+
     pub fn data(&self) -> f64 {
         self.0.borrow().data
     }
