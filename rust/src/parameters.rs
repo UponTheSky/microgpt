@@ -29,13 +29,14 @@ impl Parameters {
     ) -> Self {
         let mut state_dict = HashMap::new();
 
+        // note that wte and wpe are not matrix - more like a dictionary that returns a vector for a given integer id
         state_dict.insert(
             "wte".into(),
-            Parameters::matrix(n_embd, vocab_size, init_std),
+            Parameters::matrix(vocab_size, n_embd, init_std),
         ); // token embedding
         state_dict.insert(
             "wpe".into(),
-            Parameters::matrix(n_embd, block_size, init_std),
+            Parameters::matrix(block_size, n_embd, init_std),
         ); // positional embedding
         state_dict.insert(
             "lm_head".into(),
@@ -99,5 +100,22 @@ impl Parameters {
             .flatten()
             .map(|value| value.clone())
             .collect()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn count_params() {
+        // asset
+        let params = Parameters::new(4, 8, 2, 2, 4, 1.);
+
+        // action
+        let params_count = params.params().len();
+
+        // assert
+        assert_eq!(params_count, 32 + 32 + 32 + (4 * 8 * 8 + 2 * 4 * 8 * 8) * 2);
     }
 }
