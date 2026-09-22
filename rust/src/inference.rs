@@ -8,9 +8,9 @@ use crate::{
 };
 
 pub struct InferenceConfig {
-    temperature: f64,
-    block_size: usize,
-    vocab_size: usize,
+    pub temperature: f64,
+    pub block_size: usize,
+    pub vocab_size: usize,
 }
 
 pub fn inference(model: &mut Model, config: InferenceConfig, id_range: u32) {

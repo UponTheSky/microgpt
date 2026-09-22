@@ -5,6 +5,7 @@ use crate::{autograd::ValueRef, parameters::Parameters};
 pub struct Model {
     n_layer: usize,
     n_head: usize,
+    n_embd: usize,
     head_dim: usize,
     pub parameters: Parameters,
     keys: Vec<Vec<Vec<ValueRef>>>,   // KV Cache
@@ -12,6 +13,25 @@ pub struct Model {
 }
 
 impl Model {
+    pub fn new(
+        n_layer: usize,
+        n_head: usize,
+        n_embd: usize,
+        parameters: Parameters,
+        keys: Vec<Vec<Vec<ValueRef>>>,
+        values: Vec<Vec<Vec<ValueRef>>>,
+    ) -> Self {
+        Model {
+            n_layer,
+            n_head,
+            n_embd,
+            head_dim: n_embd / n_head,
+            parameters,
+            keys,
+            values,
+        }
+    }
+
     pub fn gpt(&mut self, token_id: usize, pos_id: usize) -> Vec<ValueRef> {
         let tok_emb = self
             .parameters

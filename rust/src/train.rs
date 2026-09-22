@@ -5,20 +5,20 @@ use crate::{
 };
 
 pub struct TrainConfig {
-    learning_rate: f64,
-    beta1: f64,
-    beta2: f64,
-    eps_adam: f64,
-    num_steps: usize,
-    block_size: usize,
+    pub learning_rate: f64,
+    pub beta1: f64,
+    pub beta2: f64,
+    pub eps_adam: f64,
+    pub num_steps: usize,
+    pub block_size: usize,
 }
 
 pub fn train(config: TrainConfig, docs: Vec<String>, model: &mut Model) {
     let params = model.parameters.params();
     let params_count = params.len();
 
-    let mut m: Vec<f64> = Vec::with_capacity(params_count);
-    let mut v: Vec<f64> = Vec::with_capacity(params_count);
+    let mut m: Vec<f64> = vec![0.0; params_count];
+    let mut v: Vec<f64> = vec![0.0; params_count];
 
     for step in 0..config.num_steps {
         let doc = docs.get(step % docs.len()).unwrap();
