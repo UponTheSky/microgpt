@@ -32,6 +32,14 @@ impl Model {
         }
     }
 
+    pub fn reset_cache(&mut self) {
+        self.keys.clear();
+        self.keys.push(Vec::new());
+
+        self.values.clear();
+        self.values.push(Vec::new());
+    }
+
     pub fn gpt(&mut self, token_id: usize, pos_id: usize) -> Vec<ValueRef> {
         let tok_emb = self
             .parameters

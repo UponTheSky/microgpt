@@ -14,6 +14,11 @@ pub struct TrainConfig {
 }
 
 pub fn train(config: TrainConfig, docs: Vec<String>, model: &mut Model) {
+    eprintln!(
+        "num docs: {}, num params: {}",
+        docs.len(),
+        model.parameters.params().len()
+    );
     let params = model.parameters.params();
     let params_count = params.len();
 
@@ -37,6 +42,7 @@ pub fn train(config: TrainConfig, docs: Vec<String>, model: &mut Model) {
         let n = usize::min(config.block_size, token_ids.len() - 1);
 
         let mut losses: Vec<ValueRef> = Vec::new();
+        model.reset_cache();
 
         for pos_id in 0..n {
             let token_id = token_ids.get(pos_id).unwrap().clone() as usize;
