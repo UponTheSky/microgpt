@@ -50,7 +50,7 @@ pub fn train(config: TrainConfig, docs: Vec<String>, model: &mut Model) {
             let logits = model.gpt(token_id, pos_id);
 
             let probs = softmax(&logits);
-            let loss_t = -probs.get(target_id).unwrap().clone();
+            let loss_t = -probs.get(target_id).unwrap().clone().log();
             losses.push(loss_t);
         }
 
