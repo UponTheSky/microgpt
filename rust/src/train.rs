@@ -68,7 +68,7 @@ pub fn train(config: TrainConfig, docs: Vec<String>, model: &mut Model) {
             p.update_grad(0.0);
         }
 
-        eprint!(
+        eprintln!(
             "step {} / {} | loss {}",
             step + 1,
             config.num_steps,

@@ -3,9 +3,9 @@ pub enum Token {
     Bos,     // BOS
 }
 
-pub type TokenId = u32;
+pub type TokenId = usize;
 
-const LOWER_A_ASCII_VALUE: u32 = 'a' as u32;
+const LOWER_A_ASCII_VALUE: u8 = 'a' as u8;
 const BOS: &'static str = "BOS";
 
 pub struct Tokenizer {}
@@ -18,11 +18,15 @@ impl Tokenizer {
                     return None;
                 }
 
-                Some(ch as u32 - LOWER_A_ASCII_VALUE)
+                Some((ch as u8 - LOWER_A_ASCII_VALUE) as usize)
             }
             Token::Bos => {
-                Some(26u32) // a ~ z + 1
+                Some(26usize) // a ~ z + 1
             }
         }
+    }
+
+    pub fn to_char(token_id: TokenId) -> char {
+        (token_id as u8 + LOWER_A_ASCII_VALUE) as char
     }
 }
