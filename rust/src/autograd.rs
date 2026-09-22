@@ -44,6 +44,18 @@ impl ValueRef {
     pub fn data(&self) -> f64 {
         self.0.borrow().data
     }
+
+    pub fn grad(&self) -> f64 {
+        self.0.borrow().grad
+    }
+
+    pub fn update_data(&self, new_value: f64) {
+        self.0.borrow_mut().data = new_value;
+    }
+
+    pub fn update_grad(&self, new_value: f64) {
+        self.0.borrow_mut().grad = new_value
+    }
 }
 
 impl Add for ValueRef {

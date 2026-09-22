@@ -93,7 +93,7 @@ impl Parameters {
             .collect::<Vec<Vec<ValueRef>>>()
     }
 
-    fn params(&self) -> Vec<ValueRef> {
+    pub fn params(&self) -> Vec<ValueRef> {
         self.state_dict
             .values()
             .flatten()

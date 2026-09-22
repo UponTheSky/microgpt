@@ -6,13 +6,13 @@ pub struct Model {
     n_layer: usize,
     n_head: usize,
     head_dim: usize,
-    parameters: Parameters,
+    pub parameters: Parameters,
     keys: Vec<Vec<Vec<ValueRef>>>,   // KV Cache
     values: Vec<Vec<Vec<ValueRef>>>, // KV Cache
 }
 
 impl Model {
-    fn gpt(&mut self, token_id: usize, pos_id: usize) -> Vec<ValueRef> {
+    pub fn gpt(&mut self, token_id: usize, pos_id: usize) -> Vec<ValueRef> {
         let tok_emb = self
             .parameters
             .state_dict
@@ -153,7 +153,7 @@ fn linear(x: &Vec<ValueRef>, w: &Vec<Vec<ValueRef>>) -> Vec<ValueRef> {
         .collect()
 }
 
-fn softmax(logits: &Vec<ValueRef>) -> Vec<ValueRef> {
+pub fn softmax(logits: &Vec<ValueRef>) -> Vec<ValueRef> {
     let max_val = logits
         .iter()
         .max_by(|x, y| f64::total_cmp(&x.data(), &y.data()))
